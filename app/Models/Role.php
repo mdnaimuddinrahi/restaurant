@@ -66,4 +66,14 @@ class Role extends Model
     {
         return $value === self::STATUS_ACTIVE ? 'assigned' : 'not assigned';
     }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public static function checkStatus(self $role, int $status): bool
+    {
+        return $role->getRawOriginal('status') == $status;
+    }
 }

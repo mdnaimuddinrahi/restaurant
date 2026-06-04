@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\Role;
+use App\Models\UserRole;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -62,33 +67,50 @@ class AuthController extends Controller
         return response()->json($request->user());
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(RegisterRequest $request): JsonResponse
     {
-        // ✅ Manual validation with JSON error response
-        $validator = Validator::make($request->all(), [
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'string'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation error',
-                'errors'  => $validator->errors(),
-            ], 422);
-        }
+        DB::beginTransaction();
 
         try {
+            $input = $request->validated();
+
             $user = User::create([
-                'name'     => $request->name,
-                'email'    => $request->email,
-                'password' => Hash::make($request->string('password')),
+                'name'        => $input['name'],
+                'username'    => $input['username'],
+                'email'       => $input['email'],
+                'password'    => Hash::make($input['password']),
+                'role_id'     => $input['role_id'],
+                'profile_img' => $input['profile_img'] ?? '',
             ]);
+
+            $role = Role::query()
+                ->lockForUpdate()
+                ->find($input['role_id']);
+
+            if (!$role) {
+                DB::rollBack();
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Role not found.',
+                ], 404);
+            }
+
+            UserRole::create([
+                'user_id' => $user->id,
+                'role_id' => $role->id,
+            ]);
+
+            if (Role::checkStatus($role, Role::STATUS_INACTIVE)) {
+                $role->update([
+                    'status' => Role::STATUS_ACTIVE,
+                ]);
+            }
+
+            DB::commit();
 
             event(new Registered($user));
 
-            // ✅ Generate token same as login
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
@@ -96,13 +118,21 @@ class AuthController extends Controller
                 'message'      => 'Registration successful.',
                 'access_token' => $token,
                 'token_type'   => 'Bearer',
-                'user'         => $user,
+                'user'         => $user->fresh(),
             ], 201);
 
-        } catch (\Throwable $th) {
+        } catch (\Throwable $e) {
+
+            DB::rollBack();
+
+            Log::error('User registration failed', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
             return response()->json([
                 'success' => false,
-                'message' => $th->getMessage(),
+                'message' => 'Registration failed. Please try again later.',
             ], 500);
         }
     }

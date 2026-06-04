@@ -46,7 +46,7 @@ class RoleController extends Controller
             return response()->json(['message' => "Role not found"], 404);
         }
 
-        if ($role->getRawOriginal('status') == Role::STATUS_ACTIVE) {
+        if (Role::checkStatus($role, Role::STATUS_ACTIVE)) {
             return response()->json(['message' => "Role is already assigned"], 400);
         }
 
@@ -67,7 +67,7 @@ class RoleController extends Controller
             return response()->json(['message' => "Role not found"], 404);
         }
 
-        if ($role->getRawOriginal('status') == Role::STATUS_ACTIVE) {
+        if (Role::checkStatus($role, Role::STATUS_ACTIVE)) {
             return response()->json(['message' => "Role is already assigned"], 400);
         }
 
