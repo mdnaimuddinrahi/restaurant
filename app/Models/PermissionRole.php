@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 
 #[Table('permission_role')]
-#[Fillable(['permission_id', 'role_id'])]
+#[Fillable(['permission_id', 'role_id', 'created_by'])]
 #[WithoutTimestamps(false)]
 
 class PermissionRole extends Model

@@ -9,6 +9,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/permissions', [\App\Http\Controllers\PermissionController::class, 'index']);
     Route::post('/permissions/assign', [\App\Http\Controllers\PermissionController::class, 'assignPermissionToRole']);
+
+    Route::apiResource('/employees', \App\Http\Controllers\EmployeeController::class);
+    Route::apiResource('/employee-designations', \App\Http\Controllers\EmployeeDesignationController::class);
+    Route::apiResource('/employee-types', \App\Http\Controllers\EmployeeTypeController::class);
+    Route::apiResource('/employee-attendances', \App\Http\Controllers\EmployeeAttendanceController::class);
 });
 
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);

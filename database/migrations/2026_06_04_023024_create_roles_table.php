@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->tinyInteger('status')->comment('0: Inactive, 1: Active')->default(0);
             $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('updated_at')->useCurrent()->useCurrentOnUpdate(); 
+            $table->dateTime('updated_at')->nullable()->useCurrentOnUpdate(); 
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
         });
