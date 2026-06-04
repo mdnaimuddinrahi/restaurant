@@ -18,6 +18,8 @@ class PermissionSeeder extends Seeder
                         ->flatten(1) // 🔥 key step: flatten nested arrays
                         ->map(function ($item) {
                             return [
+                                'group_id' => $item['group_id'] ?? 0,
+                                'group_name' => $item['group_name'] ?? null,
                                 'name' => $item['name'],
                                 'slug' => $item['slug'],
                             ];

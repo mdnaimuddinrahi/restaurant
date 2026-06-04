@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
+            $table->integer('group_id')->default(0)->unsigned();
+            $table->string('group_name', 255)->nullable();
             $table->string('name', 255);
             $table->string('slug', 255)->unique();
         });

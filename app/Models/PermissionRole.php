@@ -7,19 +7,19 @@ use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 
-#[Table('user_role')]
-#[Fillable(['user_id', 'role_id'])]
+#[Table('permission_role')]
+#[Fillable(['permission_id', 'role_id'])]
 #[WithoutTimestamps(false)]
-class UserRole extends Model
+
+class PermissionRole extends Model
 {
-    public function user()
+    public function permission()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Permission::class);
     }
 
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
-
 }

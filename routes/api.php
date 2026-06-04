@@ -1,18 +1,15 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/me',      [AuthController::class, 'me']);
+    Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
+    Route::get('/me',      [App\Http\Controllers\AuthController::class, 'me']);
     Route::apiResource('/roles', \App\Http\Controllers\RoleController::class)->whereNumber('role');
+
+    Route::get('/permissions', [\App\Http\Controllers\PermissionController::class, 'index']);
+    Route::post('/permissions/assign', [\App\Http\Controllers\PermissionController::class, 'assignPermissionToRole']);
 });
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'store']);
+Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+Route::post('/register', [App\Http\Controllers\AuthController::class, 'store']);

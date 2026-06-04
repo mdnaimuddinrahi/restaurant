@@ -21,13 +21,14 @@ return new class extends Migration
             $table->unsignedBigInteger('role_id');
             $table->string('profile_img', 500)->nullable();
             $table->rememberToken();
-            $table->timestamps();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->nullable()->useCurrentOnUpdate();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
-            $table->timestamp('created_at')->nullable();
+            $table->dateTime('created_at')->useCurrent();
         });
 
         Schema::create('sessions', function (Blueprint $table) {
