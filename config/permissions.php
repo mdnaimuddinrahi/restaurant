@@ -43,4 +43,11 @@ return [
         ['group_id' => 6, 'group_name' => 'Product Categories', 'name' => 'Update Product Categories', 'slug' => 'product-categories.update'],
         ['group_id' => 6, 'group_name' => 'Product Categories', 'name' => 'Delete Product Categories', 'slug' => 'product-categories.destroy'],
     ],
+    'product-variety' => [
+        ['group_id' => 7, 'group_name' => 'Product Variety', 'name' => 'List Product Variety', 'slug' => 'product-varieties.index'],
+        ['group_id' => 7, 'group_name' => 'Product Variety', 'name' => 'Create Product Variety', 'slug' => 'product-varieties.store'],
+        ['group_id' => 7, 'group_name' => 'Product Variety', 'name' => 'Show Product Variety', 'slug' => 'product-varieties.show'],
+        ['group_id' => 7, 'group_name' => 'Product Variety', 'name' => 'Update Product Variety', 'slug' => 'product-varieties.update'],
+        ['group_id' => 7, 'group_name' => 'Product Variety', 'name' => 'Delete Product Variety', 'slug' => 'product-varieties.destroy'],
+    ],
 ];

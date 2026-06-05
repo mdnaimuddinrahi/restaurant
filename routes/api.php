@@ -15,6 +15,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/employee-types', \App\Http\Controllers\EmployeeTypeController::class);
     Route::apiResource('/employee-attendances', \App\Http\Controllers\EmployeeAttendanceController::class);
     Route::apiResource('/product-categories', \App\Http\Controllers\ProductCategoriesController::class);
+    Route::apiResource('/product-varieties', \App\Http\Controllers\ProductVarietyController::class);
 
 });
 
