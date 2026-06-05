@@ -2,49 +2,61 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EmployeeDesignation;
 use App\Http\Requests\StoreEmployeeDesignationRequest;
 use App\Http\Requests\UpdateEmployeeDesignationRequest;
+use App\Models\EmployeeDesignation;
+use Illuminate\Http\JsonResponse;
 
 class EmployeeDesignationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $employeeDesignation = new EmployeeDesignation()->getEmployeeDesignations();
+
+        return response()->json(['message' => 'Employee Designation List Successfully.', 'data' => $employeeDesignation]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreEmployeeDesignationRequest $request)
+    public function store(StoreEmployeeDesignationRequest $request): JsonResponse
     {
-        //
+        $employeeDesignation = EmployeeDesignation::create($request->validated());
+
+        return response()->json(['message' => 'Employee Designation created successfully', 'data' => $employeeDesignation], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(EmployeeDesignation $employeeDesignation)
+    public function show(int $employeeDesignationId): JsonResponse
     {
-        //
+        $employeeDesignation = new EmployeeDesignation()->findEmployeeDesignation($employeeDesignationId);
+
+        if (empty($employeeDesignation)) {
+            return response()->json(['message' => 'No Employee Designation found'], 400);
+        }
+
+        return response()->json(['message' => 'Employee Designation retrieved successfully', 'data' => $employeeDesignation]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateEmployeeDesignationRequest $request, EmployeeDesignation $employeeDesignation)
+    public function update(UpdateEmployeeDesignationRequest $request, int $employeeDesignationId): JsonResponse
     {
-        //
+        $employeeDesignation = new EmployeeDesignation()->findEmployeeDesignation($employeeDesignationId);
+
+        if (empty($employeeDesignation)) {
+            return response()->json(['message' => 'No Employee Designation found'], 400);
+        }
+
+        $employeeDesignation->update($request->validated());
+
+        return response()->json(['message' => 'Employee Designation updated successfully', 'data' => $employeeDesignation]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(EmployeeDesignation $employeeDesignation)
+    public function destroy(int $employeeDesignationId): JsonResponse
     {
-        //
+        $employeeDesignation = new EmployeeDesignation()->findEmployeeDesignation($employeeDesignationId);
+
+        if (empty($employeeDesignation)) {
+            return response()->json(['message' => 'No Employee Designation found'], 400);
+        }
+
+        $employeeDesignation->delete();
+
+        return response()->json(['message' => 'Employee Designation deleted successfully']);
     }
 }

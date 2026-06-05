@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('employee_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255); // part-time, full-time, contractor, etc.
+            $table->string('name', 255)->unique(); // part-time, full-time, contractor, etc.
             $table->string('code', 100)->unique(); // e.g., PT, FT, CTR
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(true);

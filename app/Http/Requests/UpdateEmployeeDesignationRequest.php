@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateEmployeeDesignationRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class UpdateEmployeeDesignationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,8 +23,24 @@ class UpdateEmployeeDesignationRequest extends FormRequest
      */
     public function rules(): array
     {
+        $employeeDesignationId = $this->route('employee_designation');
+
         return [
-            //
+            'name' => [
+                'sometimes',
+                'string',
+                'max:255',
+                Rule::unique('employee_designations', 'name')->ignore($employeeDesignationId),
+            ],
+            'description' => ['nullable', 'string', 'max:1000'],
+            'is_active' => ['sometimes', 'boolean'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.unique' => 'Employee designation name already exists.',
         ];
     }
 }
