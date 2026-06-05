@@ -14,6 +14,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/employee-designations', \App\Http\Controllers\EmployeeDesignationController::class);
     Route::apiResource('/employee-types', \App\Http\Controllers\EmployeeTypeController::class);
     Route::apiResource('/employee-attendances', \App\Http\Controllers\EmployeeAttendanceController::class);
+    Route::apiResource('/product-categories', \App\Http\Controllers\ProductCategoriesController::class);
+
 });
 
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
