@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[Fillable(['name', 'status'])]
@@ -27,9 +28,9 @@ class Role extends Model
         return $query->where('status', $status);
     }
 
-    public function scopeById(Builder $query, int $id): Builder
+    public function scopeById(Builder $query, int $roleId): Builder
     {
-        return $query->where('id', $id);
+        return $query->where('id', $roleId);
     }
 
     public function getRoles(): Collection
@@ -53,20 +54,21 @@ class Role extends Model
         ]);
     }
 
-    public function getCreatedAtAttribute(string $value): string
+    protected function casts(): array
     {
-        return \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s');
+        return [
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
+        ];
     }
 
-    public function getUpdatedAtAttribute(string $value): string
+    public function status(): Attribute
     {
-        return \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s');
+        return Attribute::make(
+            get: fn ($value) => $value === self::STATUS_ACTIVE ? 'assigned' : 'not assigned',
+        );
     }
 
-    public function getStatusAttribute(int $value): string
-    {
-        return $value === self::STATUS_ACTIVE ? 'assigned' : 'not assigned';
-    }
 
     public function permissions(): BelongsToMany
     {

@@ -12,6 +12,933 @@
         }
     ],
     "paths": {
+        "/employees": {
+            "get": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Get Employee List (Paginated)",
+                "operationId": "getEmployees",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Employee list retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Employee list retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 22
+                                                    },
+                                                    "employee_type_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "employee_designation_id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "user_id": {
+                                                        "type": "integer",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John Smith"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "johnsmith2@gmail.com"
+                                                    },
+                                                    "phone": {
+                                                        "type": "string",
+                                                        "example": "1000000001"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "gender": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "basic_salary": {
+                                                        "type": "string",
+                                                        "example": "35000.00"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "example": "2026-06-05 03:34:12"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "example": "2026-06-05 03:34:12"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Create Employee",
+                "operationId": "createEmployee",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "employee_type_id",
+                                    "employee_designation_id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "employee_type_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "employee_designation_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Smith"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "johnsmith2@gmail.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "1000000001"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Global Office Location 1"
+                                    },
+                                    "date_of_birth": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1995-08-15"
+                                    },
+                                    "date_of_joining": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-01-10"
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "gender": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "profile_img": {
+                                        "type": "string",
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "national_id": {
+                                        "type": "string",
+                                        "example": "NID-G-99999"
+                                    },
+                                    "passport_number": {
+                                        "type": "string",
+                                        "example": "PPT-G-99999"
+                                    },
+                                    "emergency_contact_name": {
+                                        "type": "string",
+                                        "example": "Emma Smith"
+                                    },
+                                    "emergency_contact_phone": {
+                                        "type": "string",
+                                        "example": "9000000001"
+                                    },
+                                    "emergency_contact_relation": {
+                                        "type": "string",
+                                        "example": "Family"
+                                    },
+                                    "documents": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object"
+                                        },
+                                        "example": []
+                                    },
+                                    "basic_salary": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 35000
+                                    },
+                                    "termination_date": {
+                                        "type": "string",
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "blood_group": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "marital_status": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "shift_start": {
+                                        "type": "string",
+                                        "example": "09:00:00"
+                                    },
+                                    "shift_end": {
+                                        "type": "string",
+                                        "example": "17:00:00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Employee created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Employee created successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 22
+                                                },
+                                                "employee_type_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "employee_designation_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Smith"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "johnsmith2@gmail.com"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "1000000001"
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "Global Office Location 1"
+                                                },
+                                                "date_of_birth": {
+                                                    "type": "string",
+                                                    "example": "1995-08-15"
+                                                },
+                                                "date_of_joining": {
+                                                    "type": "string",
+                                                    "example": "2025-01-10"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "gender": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "profile_img": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "national_id": {
+                                                    "type": "string",
+                                                    "example": "NID-G-99999"
+                                                },
+                                                "passport_number": {
+                                                    "type": "string",
+                                                    "example": "PPT-G-99999"
+                                                },
+                                                "emergency_contact_name": {
+                                                    "type": "string",
+                                                    "example": "Emma Smith"
+                                                },
+                                                "emergency_contact_phone": {
+                                                    "type": "string",
+                                                    "example": "9000000001"
+                                                },
+                                                "emergency_contact_relation": {
+                                                    "type": "string",
+                                                    "example": "Family"
+                                                },
+                                                "documents": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    },
+                                                    "example": []
+                                                },
+                                                "basic_salary": {
+                                                    "type": "string",
+                                                    "example": "35000.00"
+                                                },
+                                                "termination_date": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "blood_group": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "marital_status": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "shift_start": {
+                                                    "type": "string",
+                                                    "example": "09:00:00"
+                                                },
+                                                "shift_end": {
+                                                    "type": "string",
+                                                    "example": "17:00:00"
+                                                },
+                                                "created_by": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-06-05 03:34:12"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2026-06-05 03:34:12"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/employees/{id}": {
+            "get": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Get Employee Details",
+                "operationId": "getEmployeeDetails",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Employee ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 22
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Employee details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Employee details retrieved successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 22
+                                                },
+                                                "employee_type_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "employee_designation_id": {
+                                                    "type": "2",
+                                                    "example": 2
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Smith"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "johnsmith2@gmail.com"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "1000000001"
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "Global Office Location 1"
+                                                },
+                                                "date_of_birth": {
+                                                    "type": "string",
+                                                    "example": "1995-08-15"
+                                                },
+                                                "date_of_joining": {
+                                                    "type": "string",
+                                                    "example": "2025-01-10"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "gender": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "profile_img": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "national_id": {
+                                                    "type": "string",
+                                                    "example": "NID-G-99999"
+                                                },
+                                                "passport_number": {
+                                                    "type": "string",
+                                                    "example": "PPT-G-99999"
+                                                },
+                                                "emergency_contact_name": {
+                                                    "type": "string",
+                                                    "example": "Emma Smith"
+                                                },
+                                                "emergency_contact_phone": {
+                                                    "type": "string",
+                                                    "example": "9000000001"
+                                                },
+                                                "emergency_contact_relation": {
+                                                    "type": "string",
+                                                    "example": "Family"
+                                                },
+                                                "documents": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    },
+                                                    "example": []
+                                                },
+                                                "basic_salary": {
+                                                    "type": "string",
+                                                    "example": "35000.00"
+                                                },
+                                                "termination_date": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "blood_group": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "marital_status": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "shift_start": {
+                                                    "type": "string",
+                                                    "example": "09:00:00"
+                                                },
+                                                "shift_end": {
+                                                    "type": "string",
+                                                    "example": "17:00:00"
+                                                },
+                                                "created_by": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "updated_by": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-06-05 03:34:12"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2026-06-05 04:15:45"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Update Employee",
+                "operationId": "updateEmployee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Employee ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 22
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "employee_type_id",
+                                    "employee_designation_id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "employee_type_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "employee_designation_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Smith"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "johnsmith2@gmail.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "1000000001"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Global Office Location 1"
+                                    },
+                                    "date_of_birth": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1995-08-15"
+                                    },
+                                    "date_of_joining": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-01-10"
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "gender": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "profile_img": {
+                                        "type": "string",
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "national_id": {
+                                        "type": "string",
+                                        "example": "NID-G-99999"
+                                    },
+                                    "passport_number": {
+                                        "type": "string",
+                                        "example": "PPT-G-99999"
+                                    },
+                                    "emergency_contact_name": {
+                                        "type": "string",
+                                        "example": "Emma Smith"
+                                    },
+                                    "emergency_contact_phone": {
+                                        "type": "string",
+                                        "example": "9000000001"
+                                    },
+                                    "emergency_contact_relation": {
+                                        "type": "string",
+                                        "example": "Family"
+                                    },
+                                    "documents": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object"
+                                        },
+                                        "example": []
+                                    },
+                                    "basic_salary": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 35000
+                                    },
+                                    "termination_date": {
+                                        "type": "string",
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "blood_group": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "marital_status": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "shift_start": {
+                                        "type": "string",
+                                        "example": "09:00:00"
+                                    },
+                                    "shift_end": {
+                                        "type": "string",
+                                        "example": "17:00:00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Employee updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Employee updated successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 22
+                                                },
+                                                "employee_type_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "employee_designation_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Smith"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "johnsmith2@gmail.com"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "1000000001"
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "Global Office Location 1"
+                                                },
+                                                "date_of_birth": {
+                                                    "type": "string",
+                                                    "example": "1995-08-15"
+                                                },
+                                                "date_of_joining": {
+                                                    "type": "string",
+                                                    "example": "2025-01-10"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "gender": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "profile_img": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "national_id": {
+                                                    "type": "string",
+                                                    "example": "NID-G-99999"
+                                                },
+                                                "passport_number": {
+                                                    "type": "string",
+                                                    "example": "PPT-G-99999"
+                                                },
+                                                "emergency_contact_name": {
+                                                    "type": "string",
+                                                    "example": "Emma Smith"
+                                                },
+                                                "emergency_contact_phone": {
+                                                    "type": "string",
+                                                    "example": "9000000001"
+                                                },
+                                                "emergency_contact_relation": {
+                                                    "type": "string",
+                                                    "example": "Family"
+                                                },
+                                                "documents": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    },
+                                                    "example": []
+                                                },
+                                                "basic_salary": {
+                                                    "type": "string",
+                                                    "example": "35000.00"
+                                                },
+                                                "termination_date": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "blood_group": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "marital_status": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "shift_start": {
+                                                    "type": "string",
+                                                    "example": "09:00:00"
+                                                },
+                                                "shift_end": {
+                                                    "type": "string",
+                                                    "example": "17:00:00"
+                                                },
+                                                "created_by": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "updated_by": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "example": "2026-06-05 03:34:12"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "example": "2026-06-05 04:15:45"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Delete Employee",
+                "operationId": "deleteEmployee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Employee ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 22
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Employee deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Employee deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Employee not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Employee not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/permissions/assign": {
             "post": {
                 "tags": [
@@ -764,6 +1691,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Employee",
+            "description": "Employee"
+        },
         {
             "name": "Permissions",
             "description": "Permissions"

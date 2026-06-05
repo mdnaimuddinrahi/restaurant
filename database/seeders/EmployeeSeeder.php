@@ -39,7 +39,7 @@ class EmployeeSeeder extends Seeder
                 'date_of_joining' => now()->subDays(rand(10, 1000))->format('Y-m-d'),
 
                 'is_active' => true,
-                'gender' => rand(1, 2),
+                'gender' => rand(1, 3),
 
                 'profile_img' => null,
 
@@ -55,8 +55,8 @@ class EmployeeSeeder extends Seeder
                 'basic_salary' => rand(15000, 50000),
                 'termination_date' => null,
 
-                'blood_group' => ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+'][rand(0, 6)],
-                'marital_status' => rand(0, 1) ? 'Single' : 'Married',
+                'blood_group' => rand(1, 8),
+                'marital_status' => rand(1, 4),
 
                 'shift_start' => '09:00:00',
                 'shift_end' => '17:00:00',

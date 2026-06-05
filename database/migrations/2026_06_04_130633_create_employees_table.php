@@ -38,8 +38,8 @@ return new class extends Migration
             $table->json('documents')->nullable(); // JSON field to store document paths or details
             $table->decimal('basic_salary', 12, 2)->nullable();
             $table->date('termination_date')->nullable();
-            $table->string('blood_group', 5)->nullable();
-            $table->string('marital_status', 20)->nullable();
+            $table->tinyInteger('blood_group')->default(0);
+            $table->tinyInteger('marital_status')->default(0);
              // shift timing
             $table->time('shift_start')->nullable();
             $table->time('shift_end')->nullable();
