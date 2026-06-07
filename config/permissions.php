@@ -64,4 +64,11 @@ return [
         ['group_id' => 9, 'group_name' => 'Product Announcement', 'name' => 'Update Product Announcement', 'slug' => 'product-announcements.update'],
         ['group_id' => 9, 'group_name' => 'Product Announcement', 'name' => 'Delete Product Announcement', 'slug' => 'product-announcements.destroy'],
     ],
+    'product-recipes' => [
+        ['group_id' => 10, 'group_name' => 'Product Recipe', 'name' => 'List Product Recipe', 'slug' => 'product-recipes.index'],
+        ['group_id' => 10, 'group_name' => 'Product Recipe', 'name' => 'Create Product Recipe', 'slug' => 'product-recipes.store'],
+        ['group_id' => 10, 'group_name' => 'Product Recipe', 'name' => 'Show Product Recipe', 'slug' => 'product-recipes.show'],
+        ['group_id' => 10, 'group_name' => 'Product Recipe', 'name' => 'Update Product Recipe', 'slug' => 'product-recipes.update'],
+        ['group_id' => 10, 'group_name' => 'Product Recipe', 'name' => 'Delete Product Recipe', 'slug' => 'product-recipes.destroy'],
+    ],
 ];
