@@ -16,6 +16,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/employee-attendances', \App\Http\Controllers\EmployeeAttendanceController::class);
     Route::apiResource('/product-categories', \App\Http\Controllers\ProductCategoriesController::class);
     Route::apiResource('/product-varieties', \App\Http\Controllers\ProductVarietyController::class);
+    Route::apiResource('/products', \App\Http\Controllers\ProductController::class);
+    Route::apiResource('/product-announcements', \App\Http\Controllers\ProductAnnouncementController::class);
 
 });
 

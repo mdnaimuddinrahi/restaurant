@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable([
     'employee_type_id',
@@ -73,12 +74,12 @@ class Employee extends Model
         ]; 
     }
 
-    public function employeeType()
+    public function employeeType(): BelongsTo
     {
         return $this->belongsTo(EmployeeType::class);
     }
 
-    public function employeeDesignation()
+    public function employeeDesignation(): BelongsTo
     {
         return $this->belongsTo(EmployeeDesignation::class);
     }
