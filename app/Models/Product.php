@@ -20,16 +20,17 @@ class Product extends Model
     {
         $products = $this->query();
 
-        // if (!empty($filters['query'])) {
-        //     $products->where('name', 'like', "%{$filters['query']}%");
-        // }
-
         return $products->get();
     }
 
     public function scopeById(Builder $query, int $productId): Builder
     {
         return $query->where('id', $productId);
+    }
+
+    public function findProduct(int $productId): ?Model
+    {
+        return $this->query()->byId($productId)->first();
     }
 
     public function category(): BelongsTo
@@ -40,11 +41,6 @@ class Product extends Model
     public function variety(): BelongsTo
     {
         return $this->belongsTo(ProductVariety::class, 'variety_id', 'id');
-    }
-
-    public function findProduct(int $productId): ?Model
-    {
-        return $this->query()->byId($productId)->first();
     }
 
     protected function casts(): array

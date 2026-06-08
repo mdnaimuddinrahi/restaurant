@@ -1,0 +1,90 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ namespacedRequests }}
+
+class {{ class }} extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(): JsonResponse
+    {
+        $data = new {{ model }}()->get{{model}}();
+        return response()->json([
+            'message' => {{ model }}. " list retrieved successfully.",
+            'data' => $data,
+        ])
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store({{ storeRequest }} $request): JsonResponse
+    {
+        $data = {{ model }}::create($request->validated());
+
+        return response()->json([
+            'message' => {{ model }}.' created successfully.',
+            'data' => $data,
+        ], 201);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(int ${{ modelVariable}}): JsonResponse
+    {
+        $data = new {{ model }}()->find{{ model }}($${{ modelVariable }});
+
+        if (empty($product)) {
+            return response()->json(['message' => 'No '. {{ model }} . ' found.'], 400);
+        }
+        
+        return response()->json([
+            'message' => {{ model }}. ' retrieved successfully.',
+            'data' => $data,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update({{ updateRequest }} $request, ${{ modelVariable }}): JsonResponse
+    {
+        ${{ modelVariable }}Obj = new {{ model }}()->find{{ model }}($${{ modelVariable }});
+
+        if (empty($product)) {
+            return response()->json(['message' => 'No '. {{ model }} . ' found.'], 400);
+        }
+
+        $data = ${{ modelVariable }}Obj->update($request->validated());
+
+        
+        return response()->json([
+            'message' => 'Product updated successfully.',
+            'data' => $data,
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy({{ model }} ${{ modelVariable }}): JsonResponse
+    {
+        
+        ${{ modelVariable }}Obj = new {{ model }}()->find{{ model }}($${{ modelVariable }});
+
+        if (empty($product)) {
+            return response()->json(['message' => 'No '. {{ model }} . ' found.'], 400);
+        }
+
+
+        return response()->json([
+            'message' => {{ model }}.' deleted successfully.',
+        ]);
+    }
+}
