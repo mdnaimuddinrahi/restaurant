@@ -17,7 +17,7 @@ class {{ class }} extends Controller
         return response()->json([
             'message' => {{ model }}. " list retrieved successfully.",
             'data' => $data,
-        ])
+        ]);
     }
 
     /**
@@ -36,9 +36,9 @@ class {{ class }} extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int ${{ modelVariable}}): JsonResponse
+    public function show(int ${{ modelVariable }}): JsonResponse
     {
-        $data = new {{ model }}()->find{{ model }}($${{ modelVariable }});
+        $data = new {{ model }}()->find{{ model }}(${{ modelVariable }});
 
         if (empty($product)) {
             return response()->json(['message' => 'No '. {{ model }} . ' found.'], 400);
@@ -53,7 +53,7 @@ class {{ class }} extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update({{ updateRequest }} $request, ${{ modelVariable }}): JsonResponse
+    public function update({{ updateRequest }} $request, int ${{ modelVariable }}): JsonResponse
     {
         ${{ modelVariable }}Obj = new {{ model }}()->find{{ model }}($${{ modelVariable }});
 
@@ -73,10 +73,10 @@ class {{ class }} extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy({{ model }} ${{ modelVariable }}): JsonResponse
+    public function destroy(int ${{ modelVariable }}): JsonResponse
     {
         
-        ${{ modelVariable }}Obj = new {{ model }}()->find{{ model }}($${{ modelVariable }});
+        ${{ modelVariable }}Obj = new {{ model }}()->find{{ model }}(${{ modelVariable }});
 
         if (empty($product)) {
             return response()->json(['message' => 'No '. {{ model }} . ' found.'], 400);

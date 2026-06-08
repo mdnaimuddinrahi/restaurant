@@ -20,7 +20,7 @@ class {{ class }} extends Model
     use Blameable;
     {{ factory }}
 
-    public function get{{ class }}s(array $filters = []): Collection
+    public function get{{ model }}s(array $filters = []): Collection
     {
         $data = $this->query();
 
