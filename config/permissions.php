@@ -106,4 +106,11 @@ return [
         ['group_id' => 15, 'group_name' => 'Grocery', 'name' => 'Update Grocery', 'slug' => 'groceries.update'],
         ['group_id' => 15, 'group_name' => 'Grocery', 'name' => 'Delete Grocery', 'slug' => 'groceries.destroy'],
     ],
+    'grocery-suppliers' => [
+        ['group_id' => 16, 'group_name' => 'Grocery Supplier', 'name' => 'List Grocery Supplier', 'slug' => 'grocery-suppliers.index'],
+        ['group_id' => 16, 'group_name' => 'Grocery Supplier', 'name' => 'Create Grocery Supplier', 'slug' => 'grocery-suppliers.store'],
+        ['group_id' => 16, 'group_name' => 'Grocery Supplier', 'name' => 'Show Grocery Supplier', 'slug' => 'grocery-suppliers.show'],
+        ['group_id' => 16, 'group_name' => 'Grocery Supplier', 'name' => 'Update Grocery Supplier', 'slug' => 'grocery-suppliers.update'],
+        ['group_id' => 16, 'group_name' => 'Grocery Supplier', 'name' => 'Delete Grocery Supplier', 'slug' => 'grocery-suppliers.destroy'],
+    ],
 ];
