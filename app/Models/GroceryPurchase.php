@@ -11,26 +11,26 @@ use Illuminate\Database\Eloquent\Model;
 #[Fillable([
     'created_by', 
     'updated_by',
-    'name',
-    'slug',
-    'grocery_category_id',
-    'grocery_unit_id',
-    'sku',
-    'barcode',
-    'current_stock',
-    'minimum_stock',
-    'reorder_quantity',
-    'purchase_price',
-    'average_cost',
-    'is_active',
-    'image',
-    'description',
+    'purchase_no',
+    'supplier_id',
+    'invoice_no',
+    'purchase_date',
+    'subtotal_amount',
+    'discount_amount',
+    'tax_amount',
+    'shipping_cost',
+    'total_amount',
+    'paid_amount',
+    'due_amount',
+    'status',
+    'payment_status',
+    'remarks',
 ])]
-class Grocery extends Model
+class GroceryPurchase extends Model
 {
     use Blameable;
 
-    public function getGrocerys(array $filters = []): Collection
+    public function getGroceryPurchases(array $filters = []): Collection
     {
         $data = $this->query();
 
@@ -42,7 +42,7 @@ class Grocery extends Model
         return $query->whereKey($id);
     }
 
-    public function findGrocery(int $modelId): ?Model
+    public function findGroceryPurchase(int $modelId): ?Model
     {
         return $this->query()->byId($modelId)->first();
     }

@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call([GroceryCategorySeeder::class]);
         $this->call([GroceryUnitSeeder::class]);
         $this->call([GroceryPurchaseItemSeeder::class]);
+        $this->call([GroceryPurchaseSeeder::class]);
+        $this->call([GrocerySeeder::class]);
         
     }
 }

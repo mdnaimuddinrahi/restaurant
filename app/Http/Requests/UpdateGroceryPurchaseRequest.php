@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreGroceryRequest extends FormRequest
+class UpdateGroceryPurchaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,83 +23,87 @@ class StoreGroceryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $grocery_purchase = $this->route('grocery_purchase');
+        
         return [
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-                'unique:groceries,name',
-            ],
-
-            'slug' => [
-                'required',
-                'string',
-                'max:255',
-                'unique:groceries,slug',
-            ],
-
-            'grocery_category_id' => [
-                'required',
+            'supplier_id' => [
+                'nullable',
                 'integer',
-                'exists:grocery_categories,id',
+                'exists:suppliers,id',
             ],
 
-            'grocery_unit_id' => [
-                'required',
-                'integer',
-                'exists:grocery_units,id',
-            ],
-
-            'sku' => [
+            'invoice_no' => [
                 'nullable',
                 'string',
                 'max:100',
-                'unique:groceries,sku',
             ],
 
-            'barcode' => [
-                'nullable',
-                'string',
-                'max:100',
-                'unique:groceries,barcode',
-            ],
-
-            'minimum_stock' => [
-                'nullable',
-                'numeric',
-                'min:0',
-            ],
-
-            'reorder_quantity' => [
-                'nullable',
-                'numeric',
-                'min:0',
-            ],
-
-            'purchase_price' => [
-                'nullable',
-                'numeric',
-                'min:0',
-            ],
-
-            'average_cost' => [
-                'nullable',
-                'numeric',
-                'min:0',
-            ],
-
-            'is_active' => [
+            'purchase_no' => [
                 'sometimes',
-                'boolean',
-            ],
-
-            'image' => [
-                'nullable',
                 'string',
-                'max:500',
+                'max:100',
+                Rule::unique('grocery_purchases', 'purchase_no')
+                ->ignore($grocery_purchase),
             ],
 
-            'description' => [
+            'purchase_date' => [
+                'required',
+                'date',
+            ],
+
+            'subtotal_amount' => [
+                'required',
+                'numeric',
+                'min:0',
+            ],
+
+            'discount_amount' => [
+                'nullable',
+                'numeric',
+                'min:0',
+            ],
+
+            'tax_amount' => [
+                'nullable',
+                'numeric',
+                'min:0',
+            ],
+
+            'shipping_cost' => [
+                'nullable',
+                'numeric',
+                'min:0',
+            ],
+
+            'total_amount' => [
+                'required',
+                'numeric',
+                'min:0',
+            ],
+
+            'paid_amount' => [
+                'nullable',
+                'numeric',
+                'min:0',
+            ],
+
+            'due_amount' => [
+                'nullable',
+                'numeric',
+                'min:0',
+            ],
+
+            'status' => [
+                'sometimes',
+                Rule::in([0, 1, 2, 3]),
+            ],
+
+            'payment_status' => [
+                'sometimes',
+                Rule::in([0, 1, 2]),
+            ],
+
+            'remarks' => [
                 'nullable',
                 'string',
                 'max:2000',

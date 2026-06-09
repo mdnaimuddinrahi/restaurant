@@ -92,4 +92,18 @@ return [
         ['group_id' => 13, 'group_name' => 'Grocery Purchase Item', 'name' => 'Update Grocery Purchase Item', 'slug' => 'grocery-purchase-items.update'],
         ['group_id' => 13, 'group_name' => 'Grocery Purchase Item', 'name' => 'Delete Grocery Purchase Item', 'slug' => 'grocery-purchase-items.destroy'],
     ],
+    'grocery-purchases' => [
+        ['group_id' => 14, 'group_name' => 'Grocery Purchase', 'name' => 'List Grocery Purchase', 'slug' => 'grocery-purchases.index'],
+        ['group_id' => 14, 'group_name' => 'Grocery Purchase', 'name' => 'Create Grocery Purchase', 'slug' => 'grocery-purchases.store'],
+        ['group_id' => 14, 'group_name' => 'Grocery Purchase', 'name' => 'Show Grocery Purchase', 'slug' => 'grocery-purchases.show'],
+        ['group_id' => 14, 'group_name' => 'Grocery Purchase', 'name' => 'Update Grocery Purchase', 'slug' => 'grocery-purchases.update'],
+        ['group_id' => 14, 'group_name' => 'Grocery Purchase', 'name' => 'Delete Grocery Purchase', 'slug' => 'grocery-purchases.destroy'],
+    ],
+    'groceries' => [
+        ['group_id' => 15, 'group_name' => 'Grocery', 'name' => 'List Grocery', 'slug' => 'groceries.index'],
+        ['group_id' => 15, 'group_name' => 'Grocery', 'name' => 'Create Grocery', 'slug' => 'groceries.store'],
+        ['group_id' => 15, 'group_name' => 'Grocery', 'name' => 'Show Grocery', 'slug' => 'groceries.show'],
+        ['group_id' => 15, 'group_name' => 'Grocery', 'name' => 'Update Grocery', 'slug' => 'groceries.update'],
+        ['group_id' => 15, 'group_name' => 'Grocery', 'name' => 'Delete Grocery', 'slug' => 'groceries.destroy'],
+    ],
 ];

@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreGroceryRequest extends FormRequest
+class StoreGroceryPurchaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,82 +24,83 @@ class StoreGroceryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-                'unique:groceries,name',
-            ],
-
-            'slug' => [
-                'required',
-                'string',
-                'max:255',
-                'unique:groceries,slug',
-            ],
-
-            'grocery_category_id' => [
-                'required',
+            'supplier_id' => [
+                'nullable',
                 'integer',
-                'exists:grocery_categories,id',
+                'exists:suppliers,id',
             ],
 
-            'grocery_unit_id' => [
-                'required',
-                'integer',
-                'exists:grocery_units,id',
-            ],
-
-            'sku' => [
+            'invoice_no' => [
                 'nullable',
                 'string',
                 'max:100',
-                'unique:groceries,sku',
             ],
 
-            'barcode' => [
-                'nullable',
+            'purchase_no' => [
+                'required',
                 'string',
                 'max:100',
-                'unique:groceries,barcode',
+                'unique:grocery_purchases,purchase_no',
             ],
 
-            'minimum_stock' => [
+            'purchase_date' => [
+                'required',
+                'date',
+            ],
+
+            'subtotal_amount' => [
+                'required',
+                'numeric',
+                'min:0',
+            ],
+
+            'discount_amount' => [
                 'nullable',
                 'numeric',
                 'min:0',
             ],
 
-            'reorder_quantity' => [
+            'tax_amount' => [
                 'nullable',
                 'numeric',
                 'min:0',
             ],
 
-            'purchase_price' => [
+            'shipping_cost' => [
                 'nullable',
                 'numeric',
                 'min:0',
             ],
 
-            'average_cost' => [
+            'total_amount' => [
+                'required',
+                'numeric',
+                'min:0',
+            ],
+
+            'paid_amount' => [
                 'nullable',
                 'numeric',
                 'min:0',
             ],
 
-            'is_active' => [
+            'due_amount' => [
+                'nullable',
+                'numeric',
+                'min:0',
+            ],
+
+            'status' => [
                 'sometimes',
-                'boolean',
+                Rule::in([0, 1, 2, 3]), // Pending, Received, Partial, Cancelled
             ],
 
-            'image' => [
-                'nullable',
-                'string',
-                'max:500',
+            'payment_status' => [
+                'sometimes',
+                Rule::in([0, 1, 2]), // Unpaid, Partial, Paid
             ],
 
-            'description' => [
+            'remarks' => [
                 'nullable',
                 'string',
                 'max:2000',
