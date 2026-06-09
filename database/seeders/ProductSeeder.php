@@ -28,7 +28,7 @@ class ProductSeeder extends Seeder
 
                 'variety_id' => rand(1,05),
 
-                'product_announcement_id' => null,
+                'announcement_id' => null,
 
                 'is_available' => true,
 
