@@ -26,13 +26,13 @@ class UpdateGroceryPurchaseItemRequest extends FormRequest
             'grocery_purchase_id' => [
                 'required',
                 'integer',
-                // 'exists:grocery_purchases,id',
+                'exists:grocery_purchases,id',
             ],
 
             'grocery_id' => [
                 'required',
                 'integer',
-                // 'exists:groceries,id',
+                'exists:groceries,id',
             ],
 
             'grocery_unit_id' => [
