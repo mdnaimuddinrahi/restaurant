@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/product-announcements', \App\Http\Controllers\ProductAnnouncementController::class);
     Route::apiResource('/product-recipes', \App\Http\Controllers\ProductRecipeController::class);
     Route::apiResource('/grocery-categories', \App\Http\Controllers\GroceryCategoryController::class);
-
+    Route::apiResource('/grocery-units', \App\Http\Controllers\GroceryUnitController::class);
 });
 
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);

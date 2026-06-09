@@ -78,4 +78,12 @@ return [
         ['group_id' => 11, 'group_name' => 'Grocery Categories', 'name' => 'Update Grocery Category', 'slug' => 'grocery-categories.update'],
         ['group_id' => 11, 'group_name' => 'Grocery Categories', 'name' => 'Delete Grocery Category', 'slug' => 'grocery-categories.destroy'],
     ],
+    'grocery-unit' => [
+        ['group_id' => 12, 'group_name' => 'Grocery Unit', 'name' => 'List Grocery Unit', 'slug' => 'grocery-units.index'],
+        ['group_id' => 12, 'group_name' => 'Grocery Unit', 'name' => 'Create Grocery Unit', 'slug' => 'grocery-units.store'],
+        ['group_id' => 12, 'group_name' => 'Grocery Unit', 'name' => 'Show Grocery Unit', 'slug' => 'grocery-units.show'],
+        ['group_id' => 12, 'group_name' => 'Grocery Unit', 'name' => 'Update Grocery Unit', 'slug' => 'grocery-units.update'],
+        ['group_id' => 12, 'group_name' => 'Grocery Unit', 'name' => 'Delete Grocery Unit', 'slug' => 'grocery-units.destroy'],
+    ],
+    
 ];
