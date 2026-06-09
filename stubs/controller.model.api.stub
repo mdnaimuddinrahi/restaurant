@@ -5,6 +5,7 @@ namespace {{ namespace }};
 use {{ namespacedModel }};
 use {{ rootNamespace }}Http\Controllers\Controller;
 use {{ namespacedRequests }}
+use Illuminate\Http\JsonResponse;
 
 class {{ class }} extends Controller
 {
@@ -13,9 +14,10 @@ class {{ class }} extends Controller
      */
     public function index(): JsonResponse
     {
-        $data = new {{ model }}()->get{{model}}();
+        $data = new {{ model }}()->get{{model}}s();
+
         return response()->json([
-            'message' => {{ model }}. " list retrieved successfully.",
+            'message' => "{{ model }} list retrieved successfully.",
             'data' => $data,
         ]);
     }
@@ -28,7 +30,7 @@ class {{ class }} extends Controller
         $data = {{ model }}::create($request->validated());
 
         return response()->json([
-            'message' => {{ model }}.' created successfully.',
+            'message' => '{{ model }} created successfully.',
             'data' => $data,
         ], 201);
     }
@@ -36,16 +38,16 @@ class {{ class }} extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int ${{ modelVariable }}): JsonResponse
+    public function show(int ${{ modelVariable }}Id): JsonResponse
     {
-        $data = new {{ model }}()->find{{ model }}(${{ modelVariable }});
+        $data = new {{ model }}()->find{{ model }}(${{ modelVariable }}Id);
 
-        if (empty($product)) {
-            return response()->json(['message' => 'No '. {{ model }} . ' found.'], 400);
+        if (empty($data)) {
+            return response()->json(['message' => 'No {{ model }} found.'], 400);
         }
         
         return response()->json([
-            'message' => {{ model }}. ' retrieved successfully.',
+            'message' => '{{ model }} retrieved successfully.',
             'data' => $data,
         ]);
     }
@@ -53,38 +55,38 @@ class {{ class }} extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update({{ updateRequest }} $request, int ${{ modelVariable }}): JsonResponse
+    public function update({{ updateRequest }} $request, int ${{ modelVariable }}Id): JsonResponse
     {
-        ${{ modelVariable }}Obj = new {{ model }}()->find{{ model }}($${{ modelVariable }});
+        ${{ modelVariable }}Obj = new {{ model }}()->find{{ model }}(${{ modelVariable }}Id);
 
-        if (empty($product)) {
-            return response()->json(['message' => 'No '. {{ model }} . ' found.'], 400);
+        if (empty(${{ modelVariable }}Obj)) {
+            return response()->json(['message' => 'No {{ model }} found.'], 400);
         }
 
-        $data = ${{ modelVariable }}Obj->update($request->validated());
+        ${{ modelVariable }}Obj->update($request->validated());
 
         
         return response()->json([
-            'message' => 'Product updated successfully.',
-            'data' => $data,
+            'message' => '{{ model }} updated successfully.',
+            'data' => ${{ modelVariable }}Obj->fresh(),
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int ${{ modelVariable }}): JsonResponse
+    public function destroy(int ${{ modelVariable }}Id): JsonResponse
     {
         
-        ${{ modelVariable }}Obj = new {{ model }}()->find{{ model }}(${{ modelVariable }});
+        ${{ modelVariable }}Obj = new {{ model }}()->find{{ model }}(${{ modelVariable }}Id);
 
-        if (empty($product)) {
-            return response()->json(['message' => 'No '. {{ model }} . ' found.'], 400);
+        if (empty(${{ modelVariable }}Obj)) {
+            return response()->json(['message' => 'No {{ model }} found.'], 400);
         }
-
+        ${{ modelVariable }}Obj->delete();
 
         return response()->json([
-            'message' => {{ model }}.' deleted successfully.',
+            'message' => '{{ model }} deleted successfully.',
         ]);
     }
 }
