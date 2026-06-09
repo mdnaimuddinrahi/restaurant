@@ -30,7 +30,7 @@ class {{ class }} extends Controller
         $data = {{ model }}::create($request->validated());
 
         return response()->json([
-            'message' => '{{ model }} created successfully.',
+            'message' => "{{ model }} created successfully.",
             'data' => $data,
         ], 201);
     }
@@ -43,11 +43,11 @@ class {{ class }} extends Controller
         $data = new {{ model }}()->find{{ model }}(${{ modelVariable }}Id);
 
         if (empty($data)) {
-            return response()->json(['message' => 'No {{ model }} found.'], 400);
+            return response()->json(['message' => "No {{ model }} found."], 400);
         }
         
         return response()->json([
-            'message' => '{{ model }} retrieved successfully.',
+            'message' => "{{ model }} retrieved successfully.",
             'data' => $data,
         ]);
     }
@@ -60,14 +60,14 @@ class {{ class }} extends Controller
         ${{ modelVariable }}Obj = new {{ model }}()->find{{ model }}(${{ modelVariable }}Id);
 
         if (empty(${{ modelVariable }}Obj)) {
-            return response()->json(['message' => 'No {{ model }} found.'], 400);
+            return response()->json(['message' => "No {{ model }} found."], 400);
         }
 
         ${{ modelVariable }}Obj->update($request->validated());
 
         
         return response()->json([
-            'message' => '{{ model }} updated successfully.',
+            'message' => "{{ model }} updated successfully.",
             'data' => ${{ modelVariable }}Obj->fresh(),
         ]);
     }
@@ -81,12 +81,12 @@ class {{ class }} extends Controller
         ${{ modelVariable }}Obj = new {{ model }}()->find{{ model }}(${{ modelVariable }}Id);
 
         if (empty(${{ modelVariable }}Obj)) {
-            return response()->json(['message' => 'No {{ model }} found.'], 400);
+            return response()->json(['message' => "No {{ model }} found."], 400);
         }
         ${{ modelVariable }}Obj->delete();
 
         return response()->json([
-            'message' => '{{ model }} deleted successfully.',
+            'message' => "{{ model }} deleted successfully.",
         ]);
     }
 }
