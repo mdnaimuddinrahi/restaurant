@@ -120,4 +120,11 @@ return [
         ['group_id' => 17, 'group_name' => 'Grocery Stock Ledger', 'name' => 'Update Grocery Stock Ledger', 'slug' => 'grocery-stock-ledgers.update'],
         ['group_id' => 17, 'group_name' => 'Grocery Stock Ledger', 'name' => 'Delete Grocery Stock Ledger', 'slug' => 'grocery-stock-ledgers.destroy'],
     ],
+    'customers' => [
+        ['group_id' => 18, 'group_name' => 'Customer', 'name' => 'List Customer', 'slug' => 'customers.index'],
+        ['group_id' => 18, 'group_name' => 'Customer', 'name' => 'Create Customer', 'slug' => 'customers.store'],
+        ['group_id' => 18, 'group_name' => 'Customer', 'name' => 'Show Customer', 'slug' => 'customers.show'],
+        ['group_id' => 18, 'group_name' => 'Customer', 'name' => 'Update Customer', 'slug' => 'customers.update'],
+        ['group_id' => 18, 'group_name' => 'Customer', 'name' => 'Delete Customer', 'slug' => 'customers.destroy'],
+    ],
 ];

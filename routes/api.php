@@ -26,8 +26,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/groceries', \App\Http\Controllers\GroceryController::class);
     Route::apiResource('/grocery-suppliers', \App\Http\Controllers\GrocerySupplierController::class);
     Route::apiResource('/grocery-stock-ledgers', \App\Http\Controllers\GroceryStockLedgerController::class);
-
+    Route::apiResource('/customers', \App\Http\Controllers\CustomerController::class)->whereNumber('customer');
 });
 
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'store']);
+
+Route::post('/customer-login', [App\Http\Controllers\AuthController::class, 'customerLogin']);
+Route::post('/customer-register', [App\Http\Controllers\AuthController::class, 'customerStore']);
+Route::get('/customer-me', [App\Http\Controllers\AuthController::class, 'customerMe'])->middleware('auth:sanctum');
+
+Route::post('/customer-logout', [App\Http\Controllers\AuthController::class, 'customerLogout'])->middleware('auth:sanctum');

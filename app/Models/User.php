@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -37,5 +38,15 @@ class User extends Authenticatable
                     ->permissions()
                     ->where('guard_name', $permission)
                     ->exists();
+    }
+
+    public function scopeByEmail(Builder $query, string $email): Builder
+    {
+        return $query->where('email', $email);
+    }
+
+    public function findUser(array $filters = []): ?self
+    {
+        return $this->query()->byEmail($filters['email'] ?? '')->first();
     }
 }
