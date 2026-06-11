@@ -25,7 +25,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/grocery-purchase-items', \App\Http\Controllers\GroceryPurchaseItemController::class);
     Route::apiResource('/groceries', \App\Http\Controllers\GroceryController::class);
     Route::apiResource('/grocery-suppliers', \App\Http\Controllers\GrocerySupplierController::class);
-    
+    Route::apiResource('/grocery-stock-ledgers', \App\Http\Controllers\GroceryStockLedgerController::class);
+
 });
 
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);

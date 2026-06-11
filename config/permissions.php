@@ -113,4 +113,11 @@ return [
         ['group_id' => 16, 'group_name' => 'Grocery Supplier', 'name' => 'Update Grocery Supplier', 'slug' => 'grocery-suppliers.update'],
         ['group_id' => 16, 'group_name' => 'Grocery Supplier', 'name' => 'Delete Grocery Supplier', 'slug' => 'grocery-suppliers.destroy'],
     ],
+    'grocery-stock-ledgers' => [
+        ['group_id' => 17, 'group_name' => 'Grocery Stock Ledger', 'name' => 'List Grocery Stock Ledger', 'slug' => 'grocery-stock-ledgers.index'],
+        ['group_id' => 17, 'group_name' => 'Grocery Stock Ledger', 'name' => 'Create Grocery Stock Ledger', 'slug' => 'grocery-stock-ledgers.store'],
+        ['group_id' => 17, 'group_name' => 'Grocery Stock Ledger', 'name' => 'Show Grocery Stock Ledger', 'slug' => 'grocery-stock-ledgers.show'],
+        ['group_id' => 17, 'group_name' => 'Grocery Stock Ledger', 'name' => 'Update Grocery Stock Ledger', 'slug' => 'grocery-stock-ledgers.update'],
+        ['group_id' => 17, 'group_name' => 'Grocery Stock Ledger', 'name' => 'Delete Grocery Stock Ledger', 'slug' => 'grocery-stock-ledgers.destroy'],
+    ],
 ];

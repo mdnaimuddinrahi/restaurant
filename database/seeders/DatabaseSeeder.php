@@ -30,6 +30,6 @@ class DatabaseSeeder extends Seeder
         $this->call([GroceryPurchaseSeeder::class]);
         $this->call([GrocerySeeder::class]);
         $this->call([GrocerySupplierSeeder::class]);
-        
+        $this->call([GroceryStockLedgerSeeder::class]);
     }
 }
