@@ -32,5 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call([GrocerySupplierSeeder::class]);
         $this->call([GroceryStockLedgerSeeder::class]);
         $this->call([CustomerSeeder::class]);
+        $this->call([CustomerInfoSeeder::class]);
     }
 }

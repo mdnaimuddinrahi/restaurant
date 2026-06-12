@@ -37,3 +37,4 @@ Route::post('/customer-register', [App\Http\Controllers\AuthController::class, '
 Route::get('/customer-me', [App\Http\Controllers\AuthController::class, 'customerMe'])->middleware('auth:sanctum');
 
 Route::post('/customer-logout', [App\Http\Controllers\AuthController::class, 'customerLogout'])->middleware('auth:sanctum');
+Route::apiResource('/customer-infos', \App\Http\Controllers\CustomerInfoController::class);

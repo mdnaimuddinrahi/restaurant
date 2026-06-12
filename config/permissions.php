@@ -127,4 +127,11 @@ return [
         ['group_id' => 18, 'group_name' => 'Customer', 'name' => 'Update Customer', 'slug' => 'customers.update'],
         ['group_id' => 18, 'group_name' => 'Customer', 'name' => 'Delete Customer', 'slug' => 'customers.destroy'],
     ],
+    'customer-infos' => [
+        ['group_id' => 19, 'group_name' => 'Customer Info', 'name' => 'List Customer Info', 'slug' => 'customer-infos.index'],
+        ['group_id' => 19, 'group_name' => 'Customer Info', 'name' => 'Create Customer Info', 'slug' => 'customer-infos.store'],
+        ['group_id' => 19, 'group_name' => 'Customer Info', 'name' => 'Show Customer Info', 'slug' => 'customer-infos.show'],
+        ['group_id' => 19, 'group_name' => 'Customer Info', 'name' => 'Update Customer Info', 'slug' => 'customer-infos.update'],
+        ['group_id' => 19, 'group_name' => 'Customer Info', 'name' => 'Delete Customer Info', 'slug' => 'customer-infos.destroy'],
+    ]
 ];
