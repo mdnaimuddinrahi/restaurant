@@ -17,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'permission' => \App\Http\Middleware\CheckPermission::class,
         ]);
+        // $middleware->preventRequestForgery(except: [
+        //     'api/*',
+        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // ✅ Return JSON instead of redirecting to login route
@@ -24,6 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->is('api/*')) {
                 return response()->json([
                     'success' => false,
+                    'code' => 401,
                     'message' => 'Unauthenticated. Please login again.',
                 ], 401);
             }

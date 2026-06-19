@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Blameable;
+use App\Traits\Paginable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -39,7 +40,38 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 ])]
 class Employee extends Model
 {
-    use Blameable;
+    use Blameable, Paginable;
+    
+    const string WITH_EMPLOYEE_TYPE = 'employeeType';
+    const string WITH_EMPLOYEE_DESIGNATION = 'employeeDesignation';
+    const string WITH_USER = 'user';
+
+    public function getEmployees(array $filter = [])
+    {
+        return $this->query()
+                    ->withRelations($filter['with'] ?? [])
+                    ->getOrPaginate($filter);
+    }
+
+    public function scopeWithRelations(Builder $query, array $relations = []): Builder
+    {
+        return $query->when(!empty($relations), function ($q) use ($relations) {
+            $q->with($relations);
+        });
+    }
+
+    public function scopeById(Builder $query, int $employeeId): Builder
+    {
+        return $query->where('id', $employeeId);
+    }
+
+    public function findEmployee(int $employeeId): ?Model
+    {
+        return $this->query()
+                    ->with(['employeeType', 'employeeDesignation', 'user'])
+                    ->byId($employeeId)
+                    ->first();
+    }
 
     public static function bloodGroupList(): array 
     {
@@ -101,27 +133,5 @@ class Employee extends Model
             'date_of_joining' => 'date:Y-m-d',
             'termination_date' => 'date:Y-m-d',
         ];
-    }
-
-    public function getEmployees(array $filters = []): Collection
-    {
-        $employees = $this->query()
-                          ->with(['employeeType', 'employeeDesignation', 'user']);
-
-        // if (!empty($filters['query'])) {
-        //     $employees->where('name', 'like', "%{$filters['query']}%");
-        // }
-
-        return $employees->get();
-    }
-
-    public function scopeById(Builder $query, int $employeeId): Builder
-    {
-        return $query->where('id', $employeeId);
-    }
-
-    public function findEmployee(int $employeeId): ?Model
-    {
-        return $this->query()->with(['employeeType', 'employeeDesignation', 'user'])->byId($employeeId)->first();
     }
 }

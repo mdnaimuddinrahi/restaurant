@@ -13,9 +13,22 @@ class EmployeeDesignation extends Model
 {
     use Blameable;
 
-    public function getEmployeeDesignations(): Collection
+    public function getEmployeeDesignations(array $filters = []): Collection
     {
-        return $this->query()->get();
+        return $this->query()
+                    ->selectedColumns($filters['selected_columns'] ?? [])
+                    ->isActive($filters['is_active'] ?? null)
+                    ->get();
+    }
+
+    public function scopeIsActive(Builder $query, ?bool $isActive): Builder
+    {
+        return !empty($isActive) ? $query->where('is_active', $isActive) : $query;
+    }
+
+    public function scopeSelectedColumns(Builder $query, array $selectedColumns = []): Builder
+    {
+        return !empty($selectedColumns) ? $query->select($selectedColumns) : $query;
     }
 
     public function scopeById(Builder $query, int $employeeDesignationId): Builder

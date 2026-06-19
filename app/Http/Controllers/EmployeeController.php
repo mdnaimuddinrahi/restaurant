@@ -5,19 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Services\EmployeeService;
+use App\Utils\DefaultValue;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function resource(): JsonResponse
+    {
+        $data = new EmployeeService()->resource();
+
+        return response()->json([
+            'message' => 'Employee Resource Data Fetch Successfully.', 
+            'data' => $data
+        ]);
+    }
+   
     public function index(Request $request): JsonResponse
     {
-        $employees = new Employee()->getEmployees($request->all());
+        $data = new EmployeeService()->getEmployeeList($request->all());
 
-        return response()->json(['message' => 'Employees retrieved successfully', 'data' => $employees]);
+        return response()->json($data['data'], $data['code'], $data['header'] ?? []);
     }
 
     /**
