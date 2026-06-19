@@ -41,7 +41,15 @@ class Helpers
             'data' => [
                 'success' => true,
                 'message' => empty($message) ? 'Data retrieved successfully' : $message,
-                'data' => $data['data']
+                'data' => $data['data'],
+                'meta' => [
+                    'total' => $data['total'],
+                    'per_page' => $data['per_page'],
+                    'last_page' => $data['last_page'],
+                    'current_page' => $data['current_page'],
+                    'prev_page_url' => !empty($data['prev_page_url']),
+                    'next_page_url' => !empty($data['next_page_url']),
+                ]
             ],
             'header' => [
                 'x-total-count' => $data['total'],
@@ -50,7 +58,8 @@ class Helpers
                 'x-current-page' => $data['current_page'],
                 'x-has-previous-page' => !empty($data['prev_page_url']),
                 'x-has-next-page' => !empty($data['next_page_url']),
-            ]];
+            ],
+        ];
     }
 
     public static function safeCall(callable $callback): array
