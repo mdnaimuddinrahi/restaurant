@@ -29,7 +29,11 @@ class Helpers
             'per_page' => $filter['per_page'] ?? DefaultValue::PAGINATION_PER_PAGE,
             'page' => $filter['page'] ?? DefaultValue::PAGINATION_PAGE,
             'page_name' => $filter['page_name'] ?? DefaultValue::PAGINATION_PAGE_NAME,
-            'total' => $filter['total'] ?? null
+            'total' => $filter['total'] ?? null,
+            'search_term' => $filter['search_term'] ?? null,
+            'search_fields' => $filter['search_fields'] ?? null,
+            'sort_field' => $filter['sort_field'] ?? DefaultValue::DATA_SORT_FIELD,
+            'sort_type' => $filter['sort_type'] ?? DefaultValue::DATA_SORT_TYPE,
         ]);
     }
 

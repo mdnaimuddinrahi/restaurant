@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Traits\Blameable;
+use App\Traits\Filterable;
 use App\Traits\Paginable;
+use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Log;
 
 #[Fillable([
     'employee_type_id',
@@ -40,7 +43,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 ])]
 class Employee extends Model
 {
-    use Blameable, Paginable;
+    use Blameable, Paginable, Filterable, Searchable;
     
     const string WITH_EMPLOYEE_TYPE = 'employeeType';
     const string WITH_EMPLOYEE_DESIGNATION = 'employeeDesignation';
@@ -50,7 +53,62 @@ class Employee extends Model
     {
         return $this->query()
                     ->withRelations($filter['with'] ?? [])
+                    ->byBloodGroup($filter['blood_group'] ?? null)
+                    ->byEmployeeDesignation($filter['employee_designation'] ?? null)
+                    ->byEmployeeType($filter['employee_type'] ?? null)
+                    ->byGender($filter['gender'] ?? null)
+                    ->byMartialStatus($filter['marital_status'] ?? null)
+                    ->search(
+                        $filter['search_term'] ?? null,
+                        $filter['search_fields'] ?? 'name,email,phone'
+                    )
+                    ->withRelations($filter['with'] ?? [])
                     ->getOrPaginate($filter);
+    }
+
+    public function scopeByBloodGroup(Builder $query, ?int $bloodGroup): Builder
+    {
+        return $query->when(
+            $this->isValidFilter($bloodGroup),
+            fn ($q) => $q->where('blood_group', $bloodGroup)
+        );
+    }
+
+    public function scopeByEmployeeDesignation(Builder $query, ?int $employeeDesignation): Builder
+    {
+        return $query->when(
+            $this->isValidFilter($employeeDesignation),
+            fn ($q) => $q->where('employee_designation_id', $employeeDesignation)
+        );
+    }
+
+    public function scopeByEmployeeType(Builder $query, ?int $employeeType): Builder
+    {
+        return $query->when(
+            $this->isValidFilter($employeeType),
+            fn ($q) => $q->where('employee_type_id', $employeeType)
+        );
+    }
+
+    public function scopeByGender(Builder $query, ?int $gender): Builder
+    {
+        return $query->when(
+            $this->isValidFilter($gender),
+            fn ($q) => $q->where('gender', $gender)
+        );
+    }
+
+    public function scopeByMartialStatus(Builder $query, ?string $martialStatus): Builder
+    {
+        return $query->when(
+            $this->isValidFilter($martialStatus),
+            fn ($q) => $q->where('marital_status', $martialStatus)
+        );
+    }
+    
+    public function scopeById(Builder $query, int $employeeId): Builder
+    {
+        return $query->where('id', $employeeId);
     }
 
     public function scopeWithRelations(Builder $query, array $relations = []): Builder
@@ -58,11 +116,6 @@ class Employee extends Model
         return $query->when(!empty($relations), function ($q) use ($relations) {
             $q->with($relations);
         });
-    }
-
-    public function scopeById(Builder $query, int $employeeId): Builder
-    {
-        return $query->where('id', $employeeId);
     }
 
     public function findEmployee(int $employeeId): ?Model
