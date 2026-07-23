@@ -11,36 +11,39 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\Storage;
 
 #[Fillable([
     'employee_type_id',
     'employee_designation_id',
     'user_id',
-    'name',
-    'email',
-    'phone',
-    'address',
-    'date_of_birth',
-    'date_of_joining',
+    'name', //ok
+    'email', //ok
+    'phone', //ok
+    'address', //ok
+    'date_of_birth', //ok
+    'date_of_joining', //ok
     'is_active',
-    'gender',
+    'gender', //ok
     'profile_img',
-    'national_id',
-    'passport_number',
-    'emergency_contact_name',
-    'emergency_contact_phone',
-    'emergency_contact_relation',
-    'documents',
-    'basic_salary',
-    'termination_date',
-    'blood_group',
-    'marital_status',
-    'shift_start',
-    'shift_end',
+    'national_id', //ok
+    'passport_number', //ok
+    'emergency_contact_name',//ok
+    'emergency_contact_phone',//ok
+    'emergency_contact_email',//ok
+    'emergency_contact_relation', //ok
+    'documents', //ok
+    'basic_salary',  //ok
+    'blood_group', //ok
+    'marital_status', //ok
+    'shift_start', //ok
+    'shift_end',//ok
+    'resume',
     'created_by',
     'updated_by',
 ])]
+
 class Employee extends Model
 {
     use Blameable, Paginable, Filterable, Searchable;
@@ -48,6 +51,7 @@ class Employee extends Model
     const string WITH_EMPLOYEE_TYPE = 'employeeType';
     const string WITH_EMPLOYEE_DESIGNATION = 'employeeDesignation';
     const string WITH_USER = 'user';
+    // protected $appends = ['profile_img_url'];
 
     public function getEmployees(array $filter = [])
     {
@@ -186,5 +190,40 @@ class Employee extends Model
             'date_of_joining' => 'date:Y-m-d',
             'termination_date' => 'date:Y-m-d',
         ];
+    }
+
+    protected function profileImg(): Attribute
+    {
+        return Attribute::make(
+            get: function (?string $value) {
+                return $value ? url(Storage::url($value)) : null;
+            }
+        );
+    }
+
+    protected function resume(): Attribute
+    {
+        return Attribute::make(
+            get: function (?string $value) {
+                return $value ? url(Storage::url($value)) : null;
+            }
+        );
+    }
+
+    protected function documents(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+
+                $documents = is_array($value)
+                    ? $value
+                    : json_decode($value ?? '[]', true);
+
+                return collect($documents)
+                    ->map(fn ($document) => url(Storage::url($document)))
+                    ->values()
+                    ->toArray();
+            }
+        );
     }
 }

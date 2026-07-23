@@ -92,12 +92,6 @@ class UpdateEmployeeRequest extends FormRequest
                 Rule::in(array_keys(Employee::genderList())),
             ],
 
-            'profile_img' => [
-                'nullable',
-                'string',
-                'max:500',
-            ],
-
             'national_id' => [
                 'nullable',
                 'string',
@@ -124,27 +118,17 @@ class UpdateEmployeeRequest extends FormRequest
                 'max:20',
             ],
 
+            'emergency_contact_email' => [
+                'nullable',
+                'string',
+                'email:rfc,dns',
+                'max:255',
+            ],
+
             'emergency_contact_relation' => [
                 'nullable',
                 'string',
                 'max:100',
-            ],
-
-            'documents' => [
-                'nullable',
-                'array',
-            ],
-
-            'documents.*.name' => [
-                'required_with:documents',
-                'string',
-                'max:255',
-            ],
-
-            'documents.*.path' => [
-                'required_with:documents',
-                'string',
-                'max:1000',
             ],
 
             'basic_salary' => [
@@ -171,14 +155,37 @@ class UpdateEmployeeRequest extends FormRequest
             ],
 
             'shift_start' => [
-                'nullable',
-                'date_format:H:i:s',
+                'required',
+                'date_format:h:i:A',
             ],
 
             'shift_end' => [
+                'required',
+                'date_format:h:i:A',
+            ],
+
+            
+            'documents' => [
                 'nullable',
-                'date_format:H:i:s',
-                'after:shift_start',
+                'array',
+            ],
+
+            'documents.*' => [
+                'file',
+                'mimes:pdf,jpg,jpeg,png,doc,docx',
+                'max:5120', // 5MB
+            ],
+
+            'profile_img.*' => [
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048',
+            ],
+
+            'resume.*' => [
+                'file',
+                'mimes:pdf,doc,docx',
+                'max:5120',
             ],
         ];
     }

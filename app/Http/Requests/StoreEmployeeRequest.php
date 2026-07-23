@@ -77,7 +77,6 @@ class StoreEmployeeRequest extends FormRequest
             'date_of_joining' => [
                 'nullable',
                 'date',
-                'before_or_equal:today',
             ],
 
             'is_active' => [
@@ -88,12 +87,6 @@ class StoreEmployeeRequest extends FormRequest
             'gender' => [
                 'nullable',
                 Rule::in(array_keys(Employee::genderList())), // 1=Male, 2=Female, 3=Other
-            ],
-
-            'profile_img' => [
-                'nullable',
-                'string',
-                'max:500',
             ],
 
             'national_id' => [
@@ -121,6 +114,13 @@ class StoreEmployeeRequest extends FormRequest
                 'string',
                 'max:20',
             ],
+            
+            'emergency_contact_email' => [
+                'nullable',
+                'string',
+                'email:rfc,dns',
+                'max:255',
+            ],
 
             'emergency_contact_relation' => [
                 'nullable',
@@ -133,18 +133,24 @@ class StoreEmployeeRequest extends FormRequest
                 'array',
             ],
 
-            'documents.*.name' => [
-                'required_with:documents',
-                'string',
-                'max:255',
+            'documents.*' => [
+                'file',
+                'mimes:pdf,jpg,jpeg,png,doc,docx',
+                'max:5120', // 5MB
             ],
 
-            'documents.*.path' => [
-                'required_with:documents',
-                'string',
-                'max:1000',
+            'profile_img.*' => [
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048',
             ],
 
+            'resume.*' => [
+                'file',
+                'mimes:pdf,doc,docx',
+                'max:5120',
+            ],
+            
             'basic_salary' => [
                 'nullable',
                 'numeric',
@@ -169,14 +175,13 @@ class StoreEmployeeRequest extends FormRequest
             ],
 
             'shift_start' => [
-                'nullable',
-                'date_format:H:i:s',
+                'required',
+                'date_format:h:i:A',
             ],
 
             'shift_end' => [
-                'nullable',
-                'date_format:H:i:s',
-                'after:shift_start',
+                'required',
+                'date_format:h:i:A',
             ],
         ];
     }

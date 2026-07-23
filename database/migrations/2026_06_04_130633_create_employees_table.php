@@ -24,7 +24,6 @@ return new class extends Migration
             $table->date('date_of_joining')->nullable();
             $table->boolean('is_active')->default(true);
             $table->tinyInteger('gender')->nullable(); // 1: Male, 2: Female, 3: Other
-            $table->string('profile_img')->nullable();
             $table->string('national_id', 50)
                     ->nullable()
                     ->unique();
@@ -35,14 +34,16 @@ return new class extends Migration
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_phone', 20)->nullable();
             $table->string('emergency_contact_relation', 100)->nullable();
+            $table->string('emergency_contact_email', 255)->nullable();
             $table->json('documents')->nullable(); // JSON field to store document paths or details
+            $table->string('profile_img')->nullable();
+            $table->string('resume')->nullable();
             $table->decimal('basic_salary', 12, 2)->nullable();
-            $table->date('termination_date')->nullable();
             $table->tinyInteger('blood_group')->default(0);
             $table->tinyInteger('marital_status')->default(0);
              // shift timing
-            $table->time('shift_start')->nullable();
-            $table->time('shift_end')->nullable();
+            $table->string('shift_start')->nullable();
+            $table->string('shift_end')->nullable();
             
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable()->useCurrentOnUpdate();
