@@ -45,11 +45,12 @@ class UpdateEmployeeTypeRequest extends FormRequest
             ],
             'shift_start' => [
                 'nullable',
-                'date_format:H:i:s',
+                'date_format:h:i:A',
             ],
+
             'shift_end' => [
                 'nullable',
-                'date_format:H:i:s',
+                'date_format:h:i:A',
                 'after:shift_start',
             ],
             'working_hours' => [
@@ -58,6 +59,10 @@ class UpdateEmployeeTypeRequest extends FormRequest
                 'min:1',
                 'max:1440',
             ],
+            'status' => [
+                'nullable',
+                'integer',
+            ]
         ];
     }
 

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->date('date_of_joining')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->tinyInteger('status')->default(1);
             $table->tinyInteger('gender')->nullable(); // 1: Male, 2: Female, 3: Other
             $table->string('national_id', 50)
                     ->nullable()
@@ -44,7 +44,7 @@ return new class extends Migration
              // shift timing
             $table->string('shift_start')->nullable();
             $table->string('shift_end')->nullable();
-            
+            $table->dateTime('termination_date')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable()->useCurrentOnUpdate();
             $table->unsignedBigInteger('created_by')->nullable();   

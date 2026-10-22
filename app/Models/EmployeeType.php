@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['name', 'code', 'description', 'is_active', 'shift_start', 'shift_end', 'working_hours', 'created_by', 'updated_by'])]
+#[Fillable(['name', 'code', 'description', 'status', 'shift_start', 'shift_end', 'working_hours', 'created_by', 'updated_by'])]
 class EmployeeType extends Model
 {
     use Blameable;
@@ -17,13 +17,13 @@ class EmployeeType extends Model
     {
         return $this->query()
                     ->selectedColumns($filters['selected_columns'] ?? [])
-                    ->isActive($filters['is_active'] ?? null)
+                    ->isActiveStatus($filters['status'] ?? null)
                     ->get();
     }
 
-    public function scopeIsActive(Builder $query, ?bool $isActive): Builder
+    public function scopeIsActiveStatus(Builder $query, ?bool $isActive): Builder
     {
-        return !empty($isActive) ? $query->where('is_active', $isActive) : $query;
+        return !empty($isActive) ? $query->where('status', $isActive) : $query;
     }
 
     public function scopeSelectedColumns(Builder $query, array $selectedColumns = []): Builder

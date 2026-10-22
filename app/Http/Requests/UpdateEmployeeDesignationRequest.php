@@ -33,7 +33,7 @@ class UpdateEmployeeDesignationRequest extends FormRequest
                 Rule::unique('employee_designations', 'name')->ignore($employeeDesignationId),
             ],
             'description' => ['nullable', 'string', 'max:1000'],
-            'is_active' => ['sometimes', 'boolean'],
+            'status' => ['sometimes'],
         ];
     }
 

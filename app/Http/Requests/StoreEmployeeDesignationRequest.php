@@ -31,7 +31,7 @@ class StoreEmployeeDesignationRequest extends FormRequest
                 Rule::unique('employee_designations', 'name'),
             ],
             'description' => ['nullable', 'string', 'max:1000'],
-            'is_active' => ['nullable', 'boolean'],
+            'status' => ['nullable'],
         ];
     }
 

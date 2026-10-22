@@ -22,8 +22,8 @@ return new class extends Migration
 
             $table->text('description')->nullable();
 
-            // 1 = active, 0 = inactive
-            $table->boolean('is_active')->default(true);
+            // 
+            $table->tinyInteger('status')->default(1)->comment("1 = active, 0 = inactive");
 
             // Display order in UI
             $table->unsignedSmallInteger('sort_order')->default(0);

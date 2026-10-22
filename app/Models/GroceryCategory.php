@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
     'slug',
     'code',
     'description',
-    'is_active',
+    'status',
     'sort_order',
     'image',
 ])]

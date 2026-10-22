@@ -38,7 +38,7 @@ class EmployeeSeeder extends Seeder
                 'date_of_birth' => now()->subYears(rand(22, 40))->format('Y-m-d'),
                 'date_of_joining' => now()->subDays(rand(10, 1000))->format('Y-m-d'),
 
-                'is_active' => true,
+                'status' => 1,
                 'gender' => rand(1, 3),
 
                 'profile_img' => null,

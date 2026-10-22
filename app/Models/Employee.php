@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Storage;
     'address', //ok
     'date_of_birth', //ok
     'date_of_joining', //ok
-    'is_active',
+    'status',
     'gender', //ok
     'profile_img',
     'national_id', //ok
@@ -184,7 +184,7 @@ class Employee extends Model
             'created_at' => 'datetime:Y-m-d H:i:s',
             'updated_at' => 'datetime:Y-m-d H:i:s',
             'documents' => 'array',
-            'is_active' => 'boolean',
+            'status' => 'boolean',
             'basic_salary' => 'decimal:2',
             'date_of_birth' => 'date:Y-m-d',
             'date_of_joining' => 'date:Y-m-d',

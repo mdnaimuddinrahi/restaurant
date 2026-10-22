@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password', 255);
             $table->unsignedBigInteger('role_id');
             $table->string('profile_img', 500)->nullable();
+            $table->tinyInteger('status')->default(0);
             $table->rememberToken();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable()->useCurrentOnUpdate();

@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('name', 255)->unique(); // part-time, full-time, contractor, etc.
             $table->string('code', 100)->unique(); // e.g., PT, FT, CTR
             $table->text('description')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->tinyInteger('status')->default(1);
             // shift timing
-            $table->time('shift_start')->nullable();
-            $table->time('shift_end')->nullable();
+            $table->string('shift_start', 50)->nullable();
+            $table->string('shift_end', 50)->nullable();
 
             // duration in minutes
             $table->unsignedSmallInteger('working_hours')->nullable();
