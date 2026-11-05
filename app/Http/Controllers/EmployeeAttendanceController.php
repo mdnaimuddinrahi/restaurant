@@ -5,46 +5,71 @@ namespace App\Http\Controllers;
 use App\Models\EmployeeAttendance;
 use App\Http\Requests\StoreEmployeeAttendanceRequest;
 use App\Http\Requests\UpdateEmployeeAttendanceRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class EmployeeAttendanceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        //
+        $employeeAttendances = new EmployeeAttendance()->getEmployeeAttendances($request->all());
+
+        return response()->json([
+            'message' => 'Employee Attendance List Successfully.',
+            'data' => $employeeAttendances,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreEmployeeAttendanceRequest $request)
+    public function store(StoreEmployeeAttendanceRequest $request): JsonResponse
     {
-        //
+        $employeeAttendance = EmployeeAttendance::create($request->validated());
+
+        return response()->json([
+            'message' => 'Employee Attendance created successfully',
+            'data' => $employeeAttendance,
+        ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(EmployeeAttendance $employeeAttendance)
+    public function show(int $employeeAttendanceId): JsonResponse
     {
-        //
+        $employeeAttendance = new EmployeeAttendance()->findEmployeeAttendance($employeeAttendanceId);
+
+        if (empty($employeeAttendance)) {
+            return response()->json(['message' => 'No Employee Attendance found'], 400);
+        }
+
+        return response()->json([
+            'message' => 'Employee Attendance retrieved successfully',
+            'data' => $employeeAttendance,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateEmployeeAttendanceRequest $request, EmployeeAttendance $employeeAttendance)
+    public function update(UpdateEmployeeAttendanceRequest $request, int $employeeAttendanceId): JsonResponse
     {
-        //
+        $employeeAttendance = new EmployeeAttendance()->findEmployeeAttendance($employeeAttendanceId);
+
+        if (empty($employeeAttendance)) {
+            return response()->json(['message' => 'No Employee Attendance found'], 400);
+        }
+
+        $employeeAttendance->update($request->validated());
+
+        return response()->json([
+            'message' => 'Employee Attendance updated successfully',
+            'data' => $employeeAttendance,
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(EmployeeAttendance $employeeAttendance)
+    public function destroy(int $employeeAttendanceId): JsonResponse
     {
-        //
+        $employeeAttendance = new EmployeeAttendance()->findEmployeeAttendance($employeeAttendanceId);
+
+        if (empty($employeeAttendance)) {
+            return response()->json(['message' => 'No Employee Attendance found'], 400);
+        }
+
+        $employeeAttendance->delete();
+
+        return response()->json(['message' => 'Employee Attendance deleted successfully']);
     }
 }
