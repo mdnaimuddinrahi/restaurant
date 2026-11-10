@@ -63,12 +63,11 @@ class GroceryCategoryController extends Controller
             return response()->json(['message' => 'No Grocery Category found.'], 400);
         }
 
-        $data = $groceryCategoryObj->update($request->validated());
+        $groceryCategoryObj->update($request->validated());
 
-        
         return response()->json([
-            'message' => 'Product updated successfully.',
-            'data' => $data,
+            'message' => 'Grocery Category updated successfully.',
+            'data' => $groceryCategoryObj->fresh(),
         ]);
     }
 
