@@ -38,8 +38,14 @@ class EmployeeAttendance extends Model
             ->status($filter['status'])
             ->workingHours($filter['working_hours'])
             ->overtimeMinutes($filter['overtime_minutes'])
+            ->withRelations($filter['with'] ?? [])
             ->getOrPaginate($filter);
     }
+
+    public function employee(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Employee::class, 'employee_id');
+    }   
 
     public function scopeEmployeeId(Builder $query, ?int $employeeId): Builder
     {
@@ -119,5 +125,16 @@ class EmployeeAttendance extends Model
             'created_at' => 'datetime:Y-m-d H:i:s',
             'updated_at' => 'datetime:Y-m-d H:i:s',
         ];
+    }
+
+    public function scopeWithRelations(Builder $query, array|string|null $relations = []): Builder
+    {
+        if (is_string($relations)) {
+            $relations = array_filter(array_map('trim', explode(',', $relations)));
+        }
+
+        return $query->when(!empty($relations), function (Builder $q) use ($relations) {
+            $q->with($relations);
+        });
     }
 }

@@ -39,10 +39,23 @@ class EmployeeAttendanceApiTest extends TestCase
 
         $this->getJson('/api/employee-attendances?'.$filters)
             ->assertOk()
-            ->assertJsonPath('message', 'Employee Attendance List Successfully.')
-            ->assertJsonCount(1, 'data')
-            ->assertJsonPath('data.0.employee_id', $employeeId)
-            ->assertJsonPath('data.0.status', 1);
+            ->assertJsonPath('data.success', true)
+            ->assertJsonPath('data.message', 'Employee Attendance list retrieved successfully.')
+            ->assertJsonCount(1, 'data.data')
+            ->assertJsonPath('data.data.0.employee_id', $employeeId)
+            ->assertJsonPath('data.data.0.status', 1)
+            ->assertJsonPath('data.meta.total', 1);
+    }
+
+    public function test_index_accepts_a_string_relation_filter(): void
+    {
+        $this->authenticate();
+        $attendance = $this->createAttendance($this->createEmployee());
+
+        $this->getJson('/api/employee-attendances?with=employee')
+            ->assertOk()
+            ->assertJsonPath('data.data.0.id', $attendance->id)
+            ->assertJsonPath('data.data.0.employee.id', $attendance->employee_id);
     }
 
     public function test_store_creates_an_attendance_record(): void

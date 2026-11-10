@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EmployeeAttendance;
 use App\Http\Requests\StoreEmployeeAttendanceRequest;
 use App\Http\Requests\UpdateEmployeeAttendanceRequest;
+use App\Services\EmployeeAttendanceService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -12,12 +13,9 @@ class EmployeeAttendanceController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        $employeeAttendances = new EmployeeAttendance()->getEmployeeAttendances($request->all());
+        $data = new EmployeeAttendanceService()->getEmployeeAttendanceList($request->all());
 
-        return response()->json([
-            'message' => 'Employee Attendance List Successfully.',
-            'data' => $employeeAttendances,
-        ]);
+        return response()->json($data['data'], $data['code'], $data['header'] ?? []);
     }
 
     public function store(StoreEmployeeAttendanceRequest $request): JsonResponse
